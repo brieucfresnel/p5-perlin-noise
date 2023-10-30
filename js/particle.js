@@ -33,8 +33,8 @@ class Particle {
 
   show() {
     strokeWeight(2);
-    // stroke(map(this.pos.x, 0, width, 0,), 1);
-    stroke(0, 1);
+    stroke(random(255), 1);
+    // stroke(0, 1);
     noFill();
     line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
     this.updatePrev();

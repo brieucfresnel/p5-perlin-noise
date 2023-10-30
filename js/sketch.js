@@ -10,17 +10,23 @@ let flowField;
 
 let zoff = 0;
 let magnitude = 1;
-let timeIncrease = 0.01;
-let noiseIncrease = 0.4;
+let timeIncrease = 0.002;
+let noiseIncrease = 1.1;
+let noiseIncrSlider;
+
+const width = 400,
+  height = 400;
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(width, height);
   pixelDensity(1);
   background(white);
 
-  cols = width / cellSize;
-  rows = height / cellSize;
+  cols = Math.floor(width / cellSize);
+  rows = Math.floor(height / cellSize);
   flowField = new Array(cols * rows);
+
+  noiseIncrSlider = createSlider(0.1, 1, 2, 0.1);
 
   for (let i = 0; i < 1000; i++) {
     particles.push(new Particle(createVector(random(width), random(height))));
@@ -29,6 +35,8 @@ function setup() {
 
 function draw() {
   let yoff = 0;
+
+  noiseIncrease = noiseIncrSlider.value();
 
   for (let y = 0; y < rows; y++) {
     let xoff = 0;
@@ -40,14 +48,6 @@ function draw() {
       let v = p5.Vector.fromAngle(angle);
       v.setMag(magnitude);
       flowField[index] = v;
-
-      // stroke(black);
-      // push();
-      // translate(x * cellSize, y * cellSize);
-      // rotate(v.heading());
-      // stroke(0, 30);
-      // line(0, 1, 0, cellSize);
-      // pop();
 
       xoff += noiseIncrease;
     }
