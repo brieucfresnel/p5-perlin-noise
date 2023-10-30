@@ -1,33 +1,34 @@
-// const white = "#FFE8EC";
-// const black = "#30313A";
+const white = "#FFE8EC";
+const black = "#30313A";
+
+const cellSize = 20;
+let cols, rows;
 
 function setup() {
   createCanvas(600, 600);
   pixelDensity(1);
   background(220);
+
+  cols = width / cellSize;
+  rows = height / cellSize;
 }
 
-let res = 0.01; // Noise resolution
+let res = 0.03; // Noise resolution
 let xoff = 0;
-let yoff = 0;
 
 function draw() {
-  loadPixels();
+  let yoff = 0;
 
-  for (let y = 0; y < height; y++) {
+  for (let y = 0; y < rows; y++) {
     xoff = 0;
 
-    for (let x = 0; x < width; x++) {
-      const pxIndex = (x + y * width) * 4;
+    for (let x = 0; x < cols; x++) {
+      let n = noise(xoff, yoff);
 
-      let noiseVal = noise(xoff, yoff);
+      fill(black);
+      stroke(white);
 
-      let r = noiseVal * 255;
-
-      pixels[pxIndex] = r;
-      pixels[pxIndex + 1] = r;
-      pixels[pxIndex + 2] = r;
-      pixels[pxIndex + 3] = r;
+      rect(x * cellSize, y * cellSize, cellSize, cellSize);
 
       xoff += res;
     }
@@ -35,6 +36,5 @@ function draw() {
     yoff += res;
   }
 
-  updatePixels();
   noLoop();
 }
